@@ -17,23 +17,23 @@ def download(url: str, output_dir: Path):
 
     return out
 
-OUTPUT = Path(os.environ.get('OUTPUT_DIR'))
-OUTPUT.mkdir(exist_ok=True, parents=True)
+output = Path(os.environ.get('OUTPUT_DIR'))
+output.mkdir(exist_ok=True, parents=True)
 
-BASE_URL = 'http://agencia.tse.jus.br/estatistica/sead/odsele'
-URL_CANDIDATOS = BASE_URL + '/consulta_cand/consulta_cand_2018.zip'
-URL_PRESTACAO_CONTAS = BASE_URL + '/prestacao_contas/prestacao_de_contas_eleitorais_candidatos_2018.zip'
+base_url = 'http://agencia.tse.jus.br/estatistica/sead/odsele'
+url_candidatos = base_url + '/consulta_cand/consulta_cand_2018.zip'
+url_prestacao_contas = base_url + '/prestacao_contas/prestacao_de_contas_eleitorais_candidatos_2018.zip'
+temp = Path('/tmp')
 
-TEMP = Path('/tmp')
-candidatos = download(URL_CANDIDATOS, TEMP)
-prestacao_contas = download(URL_PRESTACAO_CONTAS, TEMP)
+candidatos = download(url_candidatos, temp)
+prestacao_contas = download(url_prestacao_contas, temp)
 
 
 shutil.move(
     candidatos.joinpath('consulta_cand_2018_BRASIL.csv'),
-    OUTPUT.joinpath('consulta_cand_2018_BRASIL.csv')
+    output.joinpath('consulta_cand_2018_BRASIL.csv')
 )
 shutil.move(
     prestacao_contas.joinpath('despesas_contratadas_candidatos_2018_BRASIL.csv'),
-    OUTPUT.joinpath('despesas_contratadas_candidatos_2018_BRASIL.csv')
+    output.joinpath('despesas_contratadas_candidatos_2018_BRASIL.csv')
 )
