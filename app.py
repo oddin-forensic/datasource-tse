@@ -10,10 +10,10 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
 def download(url: str, output_dir: Path):
     out = output_dir.joinpath(url.split('/')[-1])
-    logging.info(f'Downloading: {url} -> {out.as_posix()}')
-    file = requests.get(url, stream=True)
-    zipcontent = zipfile.ZipFile(io.BytesIO(file.content))
-    zipcontent.extractall(out.as_posix())
+    # logging.info(f'Downloading: {url} -> {out.as_posix()}')
+    # file = requests.get(url, stream=True)
+    # zipcontent = zipfile.ZipFile(io.BytesIO(file.content))
+    # zipcontent.extractall(out.as_posix())
 
     return out
 
@@ -30,10 +30,16 @@ prestacao_contas = download(url_prestacao_contas, temp)
 
 
 shutil.move(
-    candidatos.joinpath('consulta_cand_2018_BRASIL.csv'),
-    output.joinpath('consulta_cand_2018_BRASIL.csv')
+    candidatos.joinpath('consulta_cand_2018_AP.csv'),
+    output.joinpath('consulta_cand_2018_AP.csv')
 )
+
 shutil.move(
-    prestacao_contas.joinpath('despesas_contratadas_candidatos_2018_BRASIL.csv'),
-    output.joinpath('despesas_contratadas_candidatos_2018_BRASIL.csv')
+    prestacao_contas.joinpath('despesas_contratadas_candidatos_2018_AP.csv'),
+    output.joinpath('despesas_contratadas_candidatos_2018_AP.csv')
+)
+
+shutil.move(
+    prestacao_contas.joinpath('receitas_candidatos_2018_AP.csv'),
+    output.joinpath('receitas_candidatos_2018_AP.csv')
 )
